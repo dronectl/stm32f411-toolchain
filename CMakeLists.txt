@@ -1,36 +1,45 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(application_name stm32f4test)
+# global project name
+set(PROJECT_NAME "stm-tc-demo")
 
-if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "ARM")
-    set(building_for_target true)
-    set(building_for_host false)
-else()
-    set(building_for_target false)
-    set(building_for_host true)
+# cmake build guard
+if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+  message(
+    FATAL_ERROR
+      "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
+  )
 endif()
 
-set(target_base_name ${application_name}_firmware)
-project(${target_base_name} CXX)
+project(
+  ${PROJECT_NAME}
+  LANGUAGES C ASM
+  VERSION "1.0.0"
+  DESCRIPTION "STM32F411 CMake Toolchain Demo."
+)
+set(ELF_FILE ${PROJECT_NAME}.elf)
+add_executable(
+  ${PROJECT_NAME}
+  src/main.c
+)
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}.elf)
+target_compile_definitions(
+  ${PROJECT_NAME}
+  PRIVATE
+  -D${MCU}
+)
+target_include_directories(${PROJECT_NAME} PUBLIC ${STM32CUBEF4_INCLUDE})
+set(SHARED_OPTIONS -Wall -Wextra -Os -nostdlib)
+target_compile_options(${PROJECT_NAME} PRIVATE ${SHARED_OPTIONS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SHARED_OPTIONS})
+target_compile_options(${PROJECT_NAME} PUBLIC -fno-exceptions)
 
-set(elf_file ${target_base_name}.elf)
-
-file(GLOB sources *.cpp)
-add_executable(${elf_file} ${sources})
-target_link_libraries(${elf_file} PUBLIC stm32f4xx)
-
-set(shared_options -Wall -Wextra -Os -nostdlib)
-target_compile_options(${elf_file} PRIVATE ${shared_options})
-target_link_libraries(${elf_file} PRIVATE ${shared_options})
-
-target_compile_options(${elf_file} PUBLIC -fno-exceptions)
-target_compile_options(${elf_file} PUBLIC -fno-rtti)
-target_compile_options(${elf_file} PUBLIC -std=c++11)
-
-add_custom_target(${elf_file}-size DEPENDS ${elf_file} COMMAND ${ARM_SIZE_EXECUTABLE} -B -d --target=binary ${elf_file})
-
-add_custom_target(${target_base_name} ALL DEPENDS ${elf_file}-size)
-
-add_custom_target(flash_firmware DEPENDS ${elf_file}-size COMMAND ${OPENOCD_EXECUTABLE}
-        -f ${OPENOCD_CONFIG}
-        --command "program ${elf_file} verify reset exit")
+message(STATUS "Adding custom targets")
+add_custom_target(
+  ${PROJECT_NAME}-size DEPENDS ${ELF_FILE} COMMAND ${ARM_SIZE} -B -d --target=binary ${ELF_FILE}
+)
+add_custom_target(
+  flash DEPENDS ${PROJECT_NAME}-size COMMAND ${OPENOCD}
+  -f ${OPENOCD_CONFIG}
+  --command "program ${ELF_FILE} verify reset exit"
+)
