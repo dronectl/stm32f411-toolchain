@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+        "name": "(gdb) Cortex",
+        "type": "cortex-debug",
+        "cwd": "${workspaceRoot}",
+        "executable": "./build/stm-tc-demo.elf",
+        "request": "launch",
+        "servertype": "openocd",
+        "device": "STM32F411",
+        "configFiles": [
+            "interface/stlink.cfg",
+            "target/stm32f4x.cfg"
+        ]
+    }
+    ]
+}
