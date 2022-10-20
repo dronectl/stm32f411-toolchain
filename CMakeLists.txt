@@ -27,7 +27,7 @@ add_executable(
   ${PROJECT_NAME}
   src/main.c
   src/system_stm32f4xx.c
-  # src/startup_stm32f411xe.s
+  src/startup_stm32f411vetx.s
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}.elf)
 target_compile_definitions(
@@ -65,8 +65,6 @@ target_link_options(
   -mfpu=fpv4-sp-d16
   -mfloat-abi=hard
   -specs=nano.specs
-  -lc
-  -lm
   -lnosys
   -Wl,-Map=${PROJECT_NAME}.map,--cref
   -Wl,--gc-sections
@@ -79,7 +77,7 @@ add_custom_target(
 )
 add_custom_target(hex ALL ${ARM_OBJCPY} -O ihex ${PROJECT_NAME}.elf ${PROJECT_NAME}.hex DEPENDS ${PROJECT_NAME})
 add_custom_target(bin ALL ${ARM_OBJCPY} -O binary -S ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin DEPENDS ${PROJECT_NAME})
-add_custom_target(objdump ALL ${ARM_OBJDUMP} -S ${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
+add_custom_target(objdump ${ARM_OBJDUMP} -S ${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
 add_custom_target(
   flash DEPENDS ${PROJECT_NAME}-size
   COMMAND ${OPENOCD}
