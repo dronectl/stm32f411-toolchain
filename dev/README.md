@@ -14,6 +14,11 @@ Get the CMSIS `arm-none-eabi-gcc` binary for ARM Cortex microcontrollers:
 brew install --cask gcc-arm-embedded
 ```
 
+Get `OpenOCD` for flashing and providing debug interface:
+```bash
+brew install openocd
+```
+
 ### Windows
 TODO
 

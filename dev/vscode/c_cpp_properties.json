@@ -18,7 +18,7 @@
             "defines": [
                 "STM32F411xE"
             ],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
             "cStandard": "c99",
             "intelliSenseMode": "gcc-arm"
         }
