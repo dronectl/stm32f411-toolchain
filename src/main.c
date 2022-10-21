@@ -1,8 +1,8 @@
 
 #include "stm32f4xx.h"
 
-static void __delay(void) {
-  for(uint32_t i = 0; i < 2000000; i++){}; // Loop repeats 2,000,000 implementing a delay
+static void __delay(uint32_t cnt) {
+  for(uint32_t i = 0; i < cnt; i++){}; // Loop repeats 2,000,000 implementing a delay
 }
 
 int main(void) {
@@ -18,16 +18,22 @@ int main(void) {
   while (1) {
     // Turn on LEDs
     GPIOD->BSRR = 1<<12; // Set the BSRR bit 12 to 1 to turn respective LED on
+    __delay(100000); 
     GPIOD->BSRR = 1<<13; // Set the BSRR bit 13 to 1 to turn respective LED on
+    __delay(100000); 
     GPIOD->BSRR = 1<<14; // Set the BSRR bit 14 to 1 to turn respective LED on
+    __delay(100000); 
     GPIOD->BSRR = 1<<15; // Set the BSRR bit 15 to 1 to turn respective LED on
 
-    __delay(); 
+    __delay(100000); 
     // Turn off LEDs
     GPIOD->BSRR = 1<<(12+16); // Set the BSRR bit 12 + 16 to 1 to turn respective LED off
+    __delay(100000); 
     GPIOD->BSRR = 1<<(13+16); // Set the BSRR bit 13 + 16 to 1 to turn respective LED off
+    __delay(100000); 
     GPIOD->BSRR = 1<<(14+16); // Set the BSRR bit 14 + 16 to 1 to turn respective LED off
+    __delay(100000); 
     GPIOD->BSRR = 1<<(15+16); // Set the BSRR bit 15 + 16 to 1 to turn respective LED off
-    __delay(); 
+    __delay(300000); 
   }
 }
