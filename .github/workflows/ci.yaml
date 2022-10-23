@@ -25,7 +25,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: STMicroelectronics/STM32CubeF4
-          path: $GITHUB_WORKSPACE/stm32cubef4
+          # relative to $GITHUB_WORKSPACE 
+          path: stm32cubef4
       - name: update and install apt dependancies
         run: |
           sudo apt update -y
