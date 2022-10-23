@@ -53,5 +53,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: demo
-          path: $GITHUB_WORKSPACE/build/demo.*
+          # relative to $GITHUB_WORKSPACE 
+          path: build/demo.*
           retention-days: 5
