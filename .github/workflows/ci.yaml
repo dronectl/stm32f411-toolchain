@@ -26,14 +26,16 @@ jobs:
         with:
           repository: STMicroelectronics/STM32CubeF4
           path: $GITHUB_WORKSPACE/stm32cubef4
-      - name: update apt
-        run: sudo apt update -y
+      - name: update and install apt dependancies
+        run: |
+          sudo apt update -y
+          sudo apt install -y gcc-arm-none-eabi
         env:
           DEBIAN_FRONTEND: noninteractive
       - name: setup cmake
         uses: jwlawson/actions-setup-cmake@v1.13
         with:
-          cmake-version: '3.24.x'
+          cmake-version: '3.22.x'
       - name: build
         run: |
           mkdir $GITHUB_WORKSPACE/build
