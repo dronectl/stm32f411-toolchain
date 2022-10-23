@@ -23,6 +23,11 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+# add handler for unfound resources
+if (${BINUTILS_PATH} STREQUAL "")
+  message(FATAL "Could not locate ${TOOLCHAIN_PREFIX} compiler and utilities.")
+endif()
+
 # get the filename components path
 get_filename_component(TOOLCHAIN_DIR ${BINUTILS_PATH} DIRECTORY)
 message(STATUS "Discovered ARM CGT path: " ${TOOLCHAIN_DIR})
