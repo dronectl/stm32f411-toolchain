@@ -1,0 +1,52 @@
+---
+name: ci
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - "docs/**"
+      - "dev/**"
+    branches:
+      - master
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - master
+
+jobs:
+  build:
+    name: build & upload firmware
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source
+        uses: actions/checkout@v3
+      - name: fetch stm32f4 clib
+        uses: actions/checkout@v3
+        with:
+          repository: STMicroelectronics/STM32CubeF4
+          path: $GITHUB_WORKSPACE/stm32cubef4
+      - name: update apt
+        run: sudo apt update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - name: setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.24.x'
+      - name: build
+        run: |
+          mkdir $GITHUB_WORKSPACE/build
+          cd build
+          cmake .. -D$GITHUB_WORKSPACE/stm32cubef4
+          make -j4
+      - name: binary size details
+        run: make demo-size
+      - name: binary object dump
+        run: make objdump
+      - name: Archive compile artefacts 
+        uses: actions/upload-artifact@v3
+        with:
+          name: demo
+          path: $GITHUB_WORKSPACE/build/demo
+          retention-days: 5
