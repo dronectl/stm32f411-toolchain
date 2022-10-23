@@ -43,11 +43,12 @@ jobs:
           cd build
           cmake .. -DSTM32CUBEF4_BASE=$GITHUB_WORKSPACE/stm32cubef4
           make -j4
+          make help
       - name: binary size details
         run: make demo-size
       - name: binary object dump
         run: make objdump
-      - name: Archive compile artefacts 
+      - name: archive binary 
         uses: actions/upload-artifact@v3
         with:
           name: demo
