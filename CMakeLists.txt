@@ -17,7 +17,7 @@ endif()
 
 # cmake build guard
 if(NOT DEFINED STM32CUBEF4_BASE)
-  message(FATAL_ERROR "Must provide STM32CUBEF4 base path: -DSTM32CUBEF4_BASE=/path/to/stm32cubef4")
+  message(FATAL_ERROR "Must provide STM32CUBEF4 (absolute) base path: -DSTM32CUBEF4_BASE=/path/to/stm32cubef4")
 endif()
 
 project(
@@ -70,14 +70,8 @@ target_compile_options(${EXECUTABLE} PRIVATE ${STM32F411XE_C_FLAGS})
 target_link_options(${EXECUTABLE} PRIVATE ${STM32F411XE_LINKER_FLAGS})
 
 message(STATUS "Adding custom targets")
-add_custom_target(
-  ${EXECUTABLE}-size ALL DEPENDS ${EXECUTABLE} COMMAND ${ARM_SIZE} -B -d --target=binary ${EXECUTABLE}.elf
-)
+add_custom_target(${EXECUTABLE}-size DEPENDS ${EXECUTABLE} COMMAND ${ARM_SIZE} -B -d --target=binary ${EXECUTABLE}.elf)
 add_custom_target(hex ALL ${ARM_OBJCPY} -O ihex ${EXECUTABLE}.elf ${EXECUTABLE}.hex DEPENDS ${EXECUTABLE})
 add_custom_target(bin ALL ${ARM_OBJCPY} -O binary -S ${EXECUTABLE}.elf ${EXECUTABLE}.bin DEPENDS ${EXECUTABLE})
 add_custom_target(objdump ${ARM_OBJDUMP} -S ${EXECUTABLE}.elf DEPENDS ${EXECUTABLE})
-add_custom_target(
-  flash DEPENDS ${EXECUTABLE}-size
-  COMMAND ${OPENOCD}
-  -f ${OPENOCD_CONFIG}
-)
+add_custom_target(flash DEPENDS ${EXECUTABLE}-size COMMAND ${OPENOCD} -f ${OPENOCD_CONFIG})
