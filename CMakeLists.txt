@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.24)
+# 3.22 ubuntu-latest standard
+cmake_minimum_required(VERSION 3.22)
 # Load toolchain files
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/cmake/arm-none-eabi-gcc.cmake)
 
