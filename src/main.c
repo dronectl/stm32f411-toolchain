@@ -2,7 +2,7 @@
 #include "stm32f4xx.h"
 
 static void __delay(uint32_t cnt) {
-  for(uint32_t i = 0; i < cnt; i++){}; // Loop repeats 2,000,000 implementing a delay
+  for(uint32_t i = 0; i < cnt; i++){ __NOP(); }; // Loop repeats 2,000,000 implementing a delay
 }
 
 int main(void) {
