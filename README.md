@@ -8,7 +8,8 @@ A toolchain for baremetal development of STM32F411 microcontrollers.
 ## Navigation
 1. [Software Requirements](#software-requirements)
 2. [Quickstart](#quickstart)
-3. [License](#license)
+3. [Documentation](#documentation)
+4. [License](#license)
 
 ## Software Requirements
 This toolchain leverages the following software tools:
@@ -45,6 +46,9 @@ make flash
 > OpenOCD automatically detects STLINK debugger interfaces over USB. 
 
 ![img](/docs/demo.gif)
+
+## Documentation
+This repository sources the accompanying reference documentation for doing baremetal programming on the STM32F411ce microcontroller. You can download the pdfs [here](docs/README.md)
 
 ## License
 This project is licensed under the terms of the [MIT License](LICENSE)
