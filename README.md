@@ -48,7 +48,7 @@ make flash
 ![img](/docs/demo.gif)
 
 ## Documentation
-This repository sources the accompanying reference documentation for doing baremetal programming on the STM32F411ce microcontroller. You can download the pdfs [here](docs/README.md)
+This repository sources the accompanying reference documentation for doing baremetal programming on the STM32F411ce microcontroller. You can download the pdfs [here](docs/)
 
 ## License
 This project is licensed under the terms of the [MIT License](LICENSE)
