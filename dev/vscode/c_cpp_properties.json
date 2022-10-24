@@ -1,25 +1,15 @@
 {
-    "env": {
-        "STM32CubeF4Base": "/Applications/stm/f411/STM32CubeF4"
-    },
     "configurations": [
         {
             "name": "STM32F411",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${STM32CubeF4Base}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
-                "${STM32CubeF4Base}/Drivers/CMSIS/Core/Include"
-            ],
             "browse": {
                 "path": [
                     "${workspaceFolder}"
                 ]
             },
-            "defines": [
-                "STM32F411xE"
-            ],
             "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
-            "cStandard": "c99",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "cStandard": "c11",
             "intelliSenseMode": "gcc-arm"
         }
     ],
