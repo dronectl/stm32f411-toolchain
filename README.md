@@ -26,12 +26,12 @@ Clone this repository and navigate to the repository root:
 git clone git@github.com:dronectl/stm32f411-toolchain.git
 cd stm32f411-toolchain
 ```
-Initialize the build system using `cmake`:
+Initialize the build system using `cmake`. Export compile commands to configure Intellisense:
 ```bash
 mkdir build
 cd build
 # pass the basepath of the STM32CUBEF4 install directory
-cmake .. -DSTM32CUBEF4_BASE=/path/to/STM32CubeF4
+cmake .. -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DSTM32CUBEF4_BASE=/path/to/stm32cubef4
 ...
 ```
 Compile the firmware
