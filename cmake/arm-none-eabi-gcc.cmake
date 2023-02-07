@@ -7,14 +7,8 @@ set(CMAKE_SYSTEM_VERSION 1)
 set(CMAKE_SYSTEM_PROCESSOR arm-eabi)
 set(TOOLCHAIN_PREFIX arm-none-eabi)
 
-# get the binary search command for the host platform and set toolchain extensions
-if(MINGW OR CYGWIN OR WIN32)
-  set(UTIL_SEARCH_CMD where)
-  set(TOOLCHAIN_EXT ".exe" )
-elseif(UNIX OR APPLE)
-  set(UTIL_SEARCH_CMD which)
-  set(TOOLCHAIN_EXT "" )
-endif()
+set(UTIL_SEARCH_CMD which)
+set(TOOLCHAIN_EXT "" )
 
 # search for arm toolchain binary and get its absolute path
 execute_process(
